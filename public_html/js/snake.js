@@ -1,6 +1,6 @@
 var snake;
 var snakeLength;
-var snakeWidth;
+var snakeSize;
 
 var context;
 var ScreenHeight;
@@ -30,7 +30,13 @@ function gameDraw(){
 }
 
 function snakeInitialize(){
+    snake = [];
+    snakeLength = 5;
+    snakeSize = 20;
     
+    for(var index = 0; index < snakeLength; index++){
+        
+    }
 }
 
 function snakeDraw(){
