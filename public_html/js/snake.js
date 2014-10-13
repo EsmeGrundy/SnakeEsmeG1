@@ -85,8 +85,8 @@ function snakeUpdate() {
     var snakeHeadX = snake[0].x;
     var snakeHeadY = snake[0].y;
     
-       document.onkeydown = function(e) {
-        var key = e.keycode;
+       document.keyDown = function(event) {
+        var key = event.keyCode;
         
         if(key === "37" && snakeDirection !== "right"){
             snakeDirection === "left";
