@@ -14,6 +14,8 @@ var context;
 var ScreenHeight;
 var ScreenWidth;
 
+var score;
+
 /*--------------------------------------------------------------------------
  * Calling Functions
  * -------------------------------------------------------------------------
@@ -51,6 +53,8 @@ function gameLoop() {
 function gameDraw() {
     context.fillStyle = "rgb(235, 150, 54)";
     context.fillRect(0, 0, ScreenWidth, ScreenHeight);
+    context.lineWidth = 2;
+    context.strokeStyle = "black";
 }
 
 /*-------------------------------------------------------------------------
@@ -76,7 +80,7 @@ function snakeDraw() {
     for (var index = 0; index < snake.length; index++) {
         context.fillStyle = "black";
         context.fillRect(snake[index].x * snakeSize, snake[index].y * snakeSize, snakeSize, snakeSize);
-        context.strokeStyle = "white";
+        context.strokeStyle = "rgb(235, 150, 54)";
         context.strokeRect(snake[index].x * snakeSize, snake[index].y * snakeSize, snakeSize, snakeSize);
     }
 }
@@ -176,5 +180,15 @@ function checkFoodCollision (snakeHeadX, snakeHeadY) {
 }
 
 function checkWallCollision (snakeHeadX, snakeHeadY) {
-    
+    if (snakeHeadX * snakeSize >= ScreenWidth || snakeHeadX * snakeSize < 0 || snakeHeadY * snakeSize >= ScreenHeight || snakeHeadY < 0){
+       console.log("Wall Collision");
+       gameOver();
+    }
+}
+
+function gameOver(){
+    context.clearRect(0, 0, ScreenWidth, ScreenHeight);
+    context.fillStyle = "black";
+    context.font = "50px sans-serif";
+    context.fillText("Game Over", ((ScreenWidth / 2) - (context.measureText("Game Over").width / 2)), 50);
 }
