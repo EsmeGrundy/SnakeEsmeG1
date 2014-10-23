@@ -15,15 +15,19 @@ var ScreenHeight;
 var ScreenWidth;
 
 var score;
+var menu;
 
 /*--------------------------------------------------------------------------
  * Calling Functions
  * -------------------------------------------------------------------------
  */
-gameInitialize();
-snakeInitialize();
-foodInitialize();
-setInterval(gameLoop, 1000 / 20);
+
+function gameStart(){
+    gameInitialize();
+    snakeInitialize();
+    foodInitialize();
+    setInterval(gameLoop, 1000 / 20);
+}
 
 /*-------------------------------------------------------------------------
  * Game Functions
@@ -180,7 +184,7 @@ function checkFoodCollision (snakeHeadX, snakeHeadY) {
 }
 
 function checkWallCollision (snakeHeadX, snakeHeadY) {
-    if (snakeHeadX * snakeSize >= ScreenWidth || snakeHeadX * snakeSize < 0 || snakeHeadY * snakeSize >= ScreenHeight || snakeHeadY < 0){
+    if (snakeHeadX * snakeSize >= ScreenWidth || snakeHeadX * snakeSize < 0 || snakeHeadY * snakeSize >= ScreenHeight || snakeHeadY * snakeSize< 0){
        console.log("Wall Collision");
        gameOver();
     }
@@ -191,4 +195,8 @@ function gameOver(){
     context.fillStyle = "black";
     context.font = "50px sans-serif";
     context.fillText("Game Over", ((ScreenWidth / 2) - (context.measureText("Game Over").width / 2)), 50);
+}
+
+function startMenu(){
+    menu = document.getElementById("menu");
 }
