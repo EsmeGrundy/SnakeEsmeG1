@@ -9,14 +9,15 @@ and open the template in the editor.
         <title>Esme Grundy - Snake JS</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,900italic' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
+        <section id="game-over">
+            <h1 class="title">Game Over!</h1>
+            <h3 id="restartButton">Restart?</h3>
+        </section>
         <canvas id="game-screen"></canvas>
-        <div id="menu">
-            <h1>Snake</h1>
-            <button onclick="gameStart()">Start</button>
-        </div>
 
 
         <script src="js/snake.js"></script>
