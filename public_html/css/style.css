@@ -36,11 +36,19 @@ h1, h3 {
     margin: 0;
 }
 
-#startButton {
+#lvl1Button, #lvl2Button, #lvl3Button {
     border: 3px solid black;
     border-radius: 20px;
 }
 
-#startButton:hover {
+#lvl1Button:hover {
+    background-color: crimson;
+}
+
+#lvl2Button:hover {
+    background-color: crimson;
+}
+
+#lvl3Button:hover {
     background-color: crimson;
 }
