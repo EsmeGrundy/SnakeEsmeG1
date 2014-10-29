@@ -25,6 +25,7 @@ var lvl2Button;
 var lvl3Button;
 var imageFood;
 var imageSnake;
+var interval;
 /*--------------------------------------------------------------------------
  * Calling Functions
  * -------------------------------------------------------------------------
@@ -80,7 +81,7 @@ function gameInitialize() {
     imageFood.src = "http://cdn.orkin.com/images/rodents/deer-mouse-illustration_2388x1617.jpg";
     
     imageSnake = new Image();
-    imageSnake.src = "http://www.christyfreeman.com/images/skin2.jpg";
+    imageSnake.src = "images/Scales.jpg";
 }
 
 function gameLoop() {
@@ -91,6 +92,11 @@ function gameLoop() {
         foodDraw();
         drawScoreboard();
     }
+}
+
+function startInterval(){
+    clearInterval(interval);
+    interval = setInterval(gameLoop, 2000/20);
 }
 
 function gameDraw() {
@@ -260,6 +266,7 @@ function checkFoodCollision(snakeHeadX, snakeHeadY) {
 function checkWallCollision(snakeHeadX, snakeHeadY) {
     if (snakeHeadX * snakeSize > ScreenWidth || snakeHeadX * snakeSize < 0 || snakeHeadY * snakeSize >= ScreenHeight || snakeHeadY * snakeSize < 0) {
         setState("GAME OVER");
+        clearInterval();
 
     }
 }
@@ -268,6 +275,7 @@ function checkSnakeCollision(snakeHeadX, snakeHeadY) {
     for (var index = 1; index < snake.length; index++) {
         if (snakeHeadX == snake[index].x && snakeHeadY == snake[index].y) {
             setState("GAME OVER");
+            clearInterval();
         }
     }
 }
@@ -304,6 +312,7 @@ function showMenu(state) {
     }
     else if (state == "START") {
         displayMenu(startMenu);
+        
     }
 }
 
