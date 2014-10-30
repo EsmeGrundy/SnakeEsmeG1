@@ -25,7 +25,9 @@ var lvl2Button;
 var lvl3Button;
 var imageFood;
 var imageSnake;
+var imageHead;
 var interval;
+var gameOverMusic;
 /*--------------------------------------------------------------------------
  * Calling Functions
  * -------------------------------------------------------------------------
@@ -74,15 +76,21 @@ function gameInitialize() {
 
     lvl3Button = document.getElementById("lvl3Button");
     lvl3Button.addEventListener("click", gameStartLevel3);
+    
+    gameOverMusic = document.getElementById("gameOverMusic");
 
     setState("START");
-    
+
     imageFood = new Image();
     imageFood.src = "http://cdn.orkin.com/images/rodents/deer-mouse-illustration_2388x1617.jpg";
-    
+
     imageSnake = new Image();
     imageSnake.src = "images/Scales.jpg";
+    
+    imageHead = new Image();
+    imageHead.src = "http://www.indiansnakes.org/sites/default/files/styles/large/public/snakes/image/Common%20Wolf%20Snake%20Vivek%20Sharma.jpg?itok=6x4oLveg";
 }
+
 
 function gameLoop() {
     gameDraw();
@@ -94,9 +102,19 @@ function gameLoop() {
     }
 }
 
-function startInterval(){
+function startIntervalLevel1() {
     clearInterval(interval);
-    interval = setInterval(gameLoop, 2000/20);
+    interval = setInterval(gameLoop, 2000 / 20);
+}
+
+function startIntervalLevel2() {
+    clearInterval(interval);
+    interval = setInterval(gameLoop, 1500 / 20);
+}
+
+function startIntervalLevel3() {
+    clearInterval(interval);
+    interval = setInterval(gameLoop, 1000 / 20);
 }
 
 function gameDraw() {
@@ -116,7 +134,7 @@ function gameRestart() {
 function gameStartLevel1() {
     snakeInitialize();
     foodInitialize();
-    setInterval(gameLoop, 2000 / 20);
+    startIntervalLevel1();
     hideMenu(startMenu);
     setState("PLAY");
 }
@@ -124,7 +142,7 @@ function gameStartLevel1() {
 function gameStartLevel2() {
     snakeInitialize();
     foodInitialize();
-    setInterval(gameLoop, 1500 / 20);
+    startIntervalLevel2();
     hideMenu(startMenu);
     setState("PLAY");
 }
@@ -132,7 +150,7 @@ function gameStartLevel2() {
 function gameStartLevel3() {
     snakeInitialize();
     foodInitialize();
-    setInterval(gameLoop, 1000 / 20);
+    startIntervalLevel3();
     hideMenu(startMenu);
     setState("PLAY");
 }
@@ -159,7 +177,8 @@ function snakeDraw() {
     for (var index = 0; index < snake.length; index++) {
 //        context.fillStyle = "black";
 //        context.fillRect(snake[index].x * snakeSize, snake[index].y * snakeSize, snakeSize, snakeSize);
-       context.drawImage(imageSnake,snake[index].x * snakeSize, snake[index].y * snakeSize, snakeSize, snakeSize);
+        context.drawImage(imageHead, snake[0].x * snakeSize, snake[0].y * snakeSize, snakeSize, snakeSize);
+        context.drawImage(imageSnake, snake[index].x * snakeSize, snake[index].y * snakeSize, snakeSize, snakeSize);
         context.strokeStyle = "rgb(235, 150, 54)";
         context.strokeRect(snake[index].x * snakeSize, snake[index].y * snakeSize, snakeSize, snakeSize);
     }
@@ -211,7 +230,7 @@ function foodInitialize() {
 function foodDraw() {
 //    context.fillStyle = "black";
 //    context.fillRect(food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
-      context.drawImage(imageFood,food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
+    context.drawImage(imageFood, food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
 
 }
 
@@ -312,7 +331,7 @@ function showMenu(state) {
     }
     else if (state == "START") {
         displayMenu(startMenu);
-        
+
     }
 }
 
