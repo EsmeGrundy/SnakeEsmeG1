@@ -28,6 +28,7 @@ var imageSnake;
 var imageHead;
 var interval;
 var gameOverMusic;
+var foodMusic;
 /*--------------------------------------------------------------------------
  * Calling Functions
  * -------------------------------------------------------------------------
@@ -76,8 +77,9 @@ function gameInitialize() {
 
     lvl3Button = document.getElementById("lvl3Button");
     lvl3Button.addEventListener("click", gameStartLevel3);
-    
+
     gameOverMusic = document.getElementById("gameOverMusic");
+    foodMusic = document.getElementById("foodMusic");
 
     setState("START");
 
@@ -86,9 +88,9 @@ function gameInitialize() {
 
     imageSnake = new Image();
     imageSnake.src = "images/Scales.jpg";
-    
+
     imageHead = new Image();
-    imageHead.src = "http://www.indiansnakes.org/sites/default/files/styles/large/public/snakes/image/Common%20Wolf%20Snake%20Vivek%20Sharma.jpg?itok=6x4oLveg";
+    imageHead.src = "images/SnakeHead.gif";
 }
 
 
@@ -100,21 +102,6 @@ function gameLoop() {
         foodDraw();
         drawScoreboard();
     }
-}
-
-function startIntervalLevel1() {
-    clearInterval(interval);
-    interval = setInterval(gameLoop, 2000 / 20);
-}
-
-function startIntervalLevel2() {
-    clearInterval(interval);
-    interval = setInterval(gameLoop, 1500 / 20);
-}
-
-function startIntervalLevel3() {
-    clearInterval(interval);
-    interval = setInterval(gameLoop, 1000 / 20);
 }
 
 function gameDraw() {
@@ -153,6 +140,25 @@ function gameStartLevel3() {
     startIntervalLevel3();
     hideMenu(startMenu);
     setState("PLAY");
+}
+/*-----------------------------------------------------------------------------
+ * Interval Functions
+ * ----------------------------------------------------------------------------
+ */
+
+function startIntervalLevel1() {
+    clearInterval(interval);
+    interval = setInterval(gameLoop, 2000 / 20);
+}
+
+function startIntervalLevel2() {
+    clearInterval(interval);
+    interval = setInterval(gameLoop, 1500 / 20);
+}
+
+function startIntervalLevel3() {
+    clearInterval(interval);
+    interval = setInterval(gameLoop, 1000 / 20);
 }
 /*-------------------------------------------------------------------------
  * Snake Functions
@@ -277,6 +283,9 @@ function checkFoodCollision(snakeHeadX, snakeHeadY) {
             y: 0
         })
         snakeLength++;
+        foodMusic.pause();
+        foodMusic.currentTime = 0;
+        foodMusic.play();
         setFoodPosition();
     }
 }
@@ -285,7 +294,7 @@ function checkFoodCollision(snakeHeadX, snakeHeadY) {
 function checkWallCollision(snakeHeadX, snakeHeadY) {
     if (snakeHeadX * snakeSize > ScreenWidth || snakeHeadX * snakeSize < 0 || snakeHeadY * snakeSize >= ScreenHeight || snakeHeadY * snakeSize < 0) {
         setState("GAME OVER");
-        clearInterval();
+        gameOverMusic.play();
 
     }
 }
@@ -294,7 +303,7 @@ function checkSnakeCollision(snakeHeadX, snakeHeadY) {
     for (var index = 1; index < snake.length; index++) {
         if (snakeHeadX == snake[index].x && snakeHeadY == snake[index].y) {
             setState("GAME OVER");
-            clearInterval();
+            gameOverMusic.play();
         }
     }
 }
@@ -341,5 +350,5 @@ function centerMenuPosition(menu) {
 }
 
 function drawScoreboard() {
-    scoreboard.innerHTML = "Score: " + (snakeLength - 5);
+    scoreboard.innerHTML = "Score: " + ((snakeLength - 5) * 5);
 }
