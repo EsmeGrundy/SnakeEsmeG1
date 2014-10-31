@@ -29,6 +29,7 @@ var imageHead;
 var interval;
 var gameOverMusic;
 var foodMusic;
+var mainMusic;
 /*--------------------------------------------------------------------------
  * Calling Functions
  * -------------------------------------------------------------------------
@@ -80,6 +81,9 @@ function gameInitialize() {
 
     gameOverMusic = document.getElementById("gameOverMusic");
     foodMusic = document.getElementById("foodMusic");
+    foodMusic.loop = true;
+    mainMusic = document.getElementById("mainMusic");
+    mainMusic.loop = true;
 
     setState("START");
 
@@ -121,6 +125,7 @@ function gameRestart() {
 function gameStartLevel1() {
     snakeInitialize();
     foodInitialize();
+    mainMusic.play();
     startIntervalLevel1();
     hideMenu(startMenu);
     setState("PLAY");
@@ -129,6 +134,7 @@ function gameStartLevel1() {
 function gameStartLevel2() {
     snakeInitialize();
     foodInitialize();
+    mainMusic.play();
     startIntervalLevel2();
     hideMenu(startMenu);
     setState("PLAY");
@@ -137,6 +143,7 @@ function gameStartLevel2() {
 function gameStartLevel3() {
     snakeInitialize();
     foodInitialize();
+    mainMusic.play();
     startIntervalLevel3();
     hideMenu(startMenu);
     setState("PLAY");
@@ -246,6 +253,7 @@ function setFoodPosition() {
 
     food.x = Math.floor(randomX / snakeSize);
     food.y = Math.floor(randomY / snakeSize);
+
 }
 
 /*------------------------------------------------------------------------------
@@ -283,27 +291,27 @@ function checkFoodCollision(snakeHeadX, snakeHeadY) {
             y: 0
         })
         snakeLength++;
-        foodMusic.pause();
+        setFoodPosition();
         foodMusic.currentTime = 0;
         foodMusic.play();
-        setFoodPosition();
     }
 }
 
 
 function checkWallCollision(snakeHeadX, snakeHeadY) {
     if (snakeHeadX * snakeSize > ScreenWidth || snakeHeadX * snakeSize < 0 || snakeHeadY * snakeSize >= ScreenHeight || snakeHeadY * snakeSize < 0) {
-        setState("GAME OVER");
+        mainMusic.pause();
         gameOverMusic.play();
-
+        setState("GAME OVER");
     }
 }
 
 function checkSnakeCollision(snakeHeadX, snakeHeadY) {
     for (var index = 1; index < snake.length; index++) {
         if (snakeHeadX == snake[index].x && snakeHeadY == snake[index].y) {
-            setState("GAME OVER");
+            mainMusic.pause();
             gameOverMusic.play();
+            setState("GAME OVER");
         }
     }
 }
